@@ -11,4 +11,4 @@ if (-not (Test-Path $folderPath))
   New-Item -ItemType Directory -Force -Path $folderPath
 }
 
-Copy-Item .\Microsoft.PowerShell_profile.ps1 $profile
+Copy-Item .\bootstrap.ps1 $profile
