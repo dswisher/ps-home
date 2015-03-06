@@ -21,6 +21,5 @@ The following are recommended, but not required
 
 ### Links ###
 
-* HowToGeek's [customization notes](http://www.howtogeek.com/50236/customizing-your-powershell-profile/)
 * Scripting Guy: [Don't write scripts, write functions](http://blogs.technet.com/b/heyscriptingguy/archive/2011/06/26/don-t-write-scripts-write-powershell-functions.aspx)
 

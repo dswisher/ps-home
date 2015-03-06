@@ -83,4 +83,21 @@ function global:prompt {
     return "$Admin "
 }
 
+# Make things look purty...
+$shell = $Host.UI.RawUI
+
+$shell.BackgroundColor = “DarkBlue”
+$shell.ForegroundColor = “Yellow”
+
+# Start out in a good place...
+if (Test-Path c:\git)
+{
+  Set-Location c:\git
+}
+elseif (Test-Path d:\git)
+{
+  Set-Location d:\git
+}
+
+# Done!
 Write-Host "Ready."
