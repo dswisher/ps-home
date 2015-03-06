@@ -1,5 +1,4 @@
-
-echo "Hello from MyProfile!"
+Write-Host "Initializing shell..."
 
 function find-and-run ($dirs, $name, $desc)
 {
@@ -8,7 +7,7 @@ function find-and-run ($dirs, $name, $desc)
     $file = $loc + "\" + $name
     if([IO.File]::Exists($file) -eq $true)
     {
-      if ($name.EndsWith(".psd1"))
+      if ($name.EndsWith(".psd1") -or $name.EndsWith(".psm1"))
       {
         # A module...import it.
         # Write-Host "Found module! Path: " $file
@@ -29,31 +28,59 @@ function find-and-run ($dirs, $name, $desc)
   if (-not $found)
   {
     Write-Host $desc "was NOT initialized."
+    return $FALSE;
   }
+  
+  return $TRUE
 }
 
 # Load Jump-Location profile
-find-and-run @("D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location"
+if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
+{
+  # No special init for this
+}
 
-# Load posh-git example profile
-# TODO - pull this into this file! Or at least, a bunch of it...
-# . 'D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git\profile.example.ps1'
-find-and-run @("D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git") "profile.example.ps1" "Posh-Git Profile"
-
-
-
-# -----------------
-
-
-# Load posh-git example profile
-# . 'D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git\profile.example.ps1'
-
-# Temporary hack while working on 'pig'
-# $env:Path += ";C:\git\pig\src\GitPowerShellUi\bin\Debug"
-
-# Load Jump-Location profile
-# Import-Module 'C:\Chocolatey\lib\Jump-Location.0.6.0\tools\Jump.Location.psd1'
+# Load posh-git
+if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git") "posh-git.psm1" "Posh-Git")
+{
+  # Initialize Posh-Git
+  $GitPromptSettings.EnableFileStatus = $false
+  $global:poshgitinstalled = $TRUE
+  Enable-GitColors
+}
+else
+{
+  # TODO - should there be one settings object with properties?
+  $global:poshgitinstalled = $FALSE
+}
 
 
+# One-time setup of some things for the prompt
+$Global:Admin=":"
+$CurrentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent()
+$principal = new-object System.Security.principal.windowsprincipal($CurrentUser)
+if ($principal.IsInRole("Administrators")) 
+{
+  $Admin="#"
+}
 
-# Import-Module 'D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location\Jump.Location.psd1'
+# Set up a simple prompt, adding the git prompt parts inside git repos
+# TODO: this depends on posh-git - what to do if it isn't installed?
+function global:prompt {
+    $realLASTEXITCODE = $LASTEXITCODE
+
+    # Reset color, which can be messed up by Enable-GitColors
+    $Host.UI.RawUI.ForegroundColor = $GitPromptSettings.DefaultForegroundColor
+
+    Write-Host($(Get-Location | Split-Path -Leaf)) -nonewline
+
+    if ($global:poshgitinstalled)
+    {
+      Write-VcsStatus
+    }
+
+    $global:LASTEXITCODE = $realLASTEXITCODE
+    return "$Admin "
+}
+
+Write-Host "Ready."
