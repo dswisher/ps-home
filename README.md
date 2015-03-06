@@ -14,9 +14,14 @@ My [PowerShell](https://technet.microsoft.com/en-us/library/bb978526.aspx) profi
 
 The following are recommended, but not required
 
-* [PsGet](http://psget.net/) - package manager for PowerShell modules.
+* [PsGet](http://psget.net/) - package manager for PowerShell modules.  ([github](https://github.com/psget/psget/))
 * [Jump-Location](https://github.com/tkellogg/Jump-Location) - `Install-Module Jump.Location`
 * [Posh-Git](https://github.com/dahlbyk/posh-git) - `Install-Module posh-git`
+
+
+### Included Packages ###
+
+* [PowerLs](https://github.com/jrjurman/powerls) - tweaked color scheme
 
 
 ### Links ###

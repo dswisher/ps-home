@@ -89,6 +89,12 @@ function global:prompt {
 #$shell.BackgroundColor = “DarkBlue”
 #$shell.ForegroundColor = “Yellow”
 
+# Set up a customized version of powerls
+Import-Module $PSScriptRoot\powerls
+
+Set-Alias -Name ls -Value PowerLS -Option AllScope
+Set-Alias -Name dir -Value PowerLS -Option AllScope
+
 # Start out in a good place...
 if (Test-Path c:\git)
 {
