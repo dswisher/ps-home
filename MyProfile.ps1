@@ -84,10 +84,10 @@ function global:prompt {
 }
 
 # Make things look purty...
-$shell = $Host.UI.RawUI
+#$shell = $Host.UI.RawUI
 
-$shell.BackgroundColor = “DarkBlue”
-$shell.ForegroundColor = “Yellow”
+#$shell.BackgroundColor = “DarkBlue”
+#$shell.ForegroundColor = “Yellow”
 
 # Start out in a good place...
 if (Test-Path c:\git)
