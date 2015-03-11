@@ -105,5 +105,8 @@ elseif (Test-Path d:\git)
   Set-Location d:\git
 }
 
+# Add current directory to path...
+$env:Path += ";."
+
 # Done!
 Write-Host "Ready."
