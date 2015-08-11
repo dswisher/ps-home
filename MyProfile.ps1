@@ -35,18 +35,18 @@ function find-and-run ($dirs, $name, $desc)
 }
 
 # Load Jump-Location profile
-if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
+if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "C:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
 {
   # No special init for this
 }
 
 # Load posh-git
-if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git") "posh-git.psm1" "Posh-Git")
+if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "C:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git") "posh-git.psm1" "Posh-Git")
 {
   # Initialize Posh-Git
   $GitPromptSettings.EnableFileStatus = $false
   $global:poshgitinstalled = $TRUE
-  Enable-GitColors
+  #Enable-GitColors
 }
 else
 {
@@ -96,7 +96,11 @@ Set-Alias -Name ls -Value PowerLS -Option AllScope
 Set-Alias -Name dir -Value PowerLS -Option AllScope
 
 # Start out in a good place...
-if (Test-Path c:\git)
+if (Test-Path f:\git)
+{
+  Set-Location f:\git
+}
+elseif (Test-Path c:\git)
 {
   Set-Location c:\git
 }
@@ -104,6 +108,7 @@ elseif (Test-Path d:\git)
 {
   Set-Location d:\git
 }
+
 
 # Add current directory to path...
 $env:Path += ";."
