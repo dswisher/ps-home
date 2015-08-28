@@ -35,10 +35,10 @@ function find-and-run ($dirs, $name, $desc)
 }
 
 # Load Jump-Location profile
-if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "C:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
-{
+#if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "C:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
+#{
   # No special init for this
-}
+#}
 
 # Load posh-git
 if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "C:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git") "posh-git.psm1" "Posh-Git")
