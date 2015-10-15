@@ -34,6 +34,20 @@ function find-and-run ($dirs, $name, $desc)
   return $TRUE
 }
 
+
+function find-and-add-path ($dirs, $name)
+{
+  foreach ($loc in $dirs) {
+    $path = $loc + "\" + $name
+    if(Test-Path $path)
+    {
+      $env:Path += ";" + $path
+      Write-Host "Added" $name "to the path."
+      break
+    }
+  }
+}
+
 # Load Jump-Location profile
 if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "C:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
 {
@@ -95,6 +109,12 @@ Import-Module $PSScriptRoot\powerls
 Set-Alias -Name ls -Value PowerLS -Option AllScope
 Set-Alias -Name dir -Value PowerLS -Option AllScope
 
+# Add some fun tools to the path...
+find-and-add-path @("C:\Program Files", "D:\Program Files") "7-Zip"
+
+# Add current directory to path...
+$env:Path += ";."
+
 # Start out in a good place...
 if (Test-Path f:\git)
 {
@@ -108,10 +128,6 @@ elseif (Test-Path d:\git)
 {
   Set-Location d:\git
 }
-
-
-# Add current directory to path...
-$env:Path += ";."
 
 # Done!
 Write-Host "Ready."
