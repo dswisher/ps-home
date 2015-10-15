@@ -9,13 +9,13 @@ My [PowerShell](https://technet.microsoft.com/en-us/library/bb978526.aspx) profi
 2. Make a backup copy of your profile, if you have one (TODO: install script should do this some day!)
 3. Run `.\Install.ps` 
 
+See [more details](pc-setup.md) on my standard pc setup.
 
 ### Optional Dependencies ###
 
 The following are recommended, but not required
 
 * [PsGet](http://psget.net/) - package manager for PowerShell modules.  ([github](https://github.com/psget/psget/))
-* [Jump-Location](https://github.com/tkellogg/Jump-Location) - `Install-Module Jump.Location`
 * [Posh-Git](https://github.com/dahlbyk/posh-git) - `Install-Module posh-git`
 
 
