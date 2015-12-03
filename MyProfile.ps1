@@ -111,6 +111,7 @@ Set-Alias -Name dir -Value PowerLS -Option AllScope
 
 # Add some fun tools to the path...
 find-and-add-path @("C:\Program Files", "D:\Program Files") "7-Zip"
+find-and-add-path @("C:\Program Files (x86)") "nodejs"
 
 # Add current directory to path...
 $env:Path += ";."
