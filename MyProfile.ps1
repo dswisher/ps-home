@@ -65,6 +65,28 @@ function add-app-to-path-if-found ($dirs, $name, $subdir)
   }
 }
 
+
+# Set a base path
+$env:Path = "$Env:SystemRoot\system32;$Env:SystemRoot"
+
+# TODO - look for other PS versions?
+$env:Path += ";$Env:SystemRoot\system32\WindowsPowerShell\v1.0"
+
+# TODO - C:\Windows\System32\Wbem  ?
+
+# Add some fun tools to the path, if they're present on this machine...
+add-app-to-path-if-found @("D:\ProgramData") "Chocolatey" "bin"
+add-app-to-path-if-found @("C:\Program Files", "D:\Program Files") "7-Zip"
+add-app-to-path-if-found @("C:\Program Files (x86)", "D:\Program Files") "nodejs"
+add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)") "Git" "cmd"
+
+# Add global npm packages to the path
+add-dir-to-path-if-found @("$Env:USERPROFILE\AppData\Roaming\npm")
+
+# Add current directory to path...
+$env:Path += ";."
+
+
 # Load Jump-Location profile
 #if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "C:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
 #{
@@ -125,26 +147,6 @@ Import-Module $PSScriptRoot\powerls
 
 Set-Alias -Name ls -Value PowerLS -Option AllScope
 Set-Alias -Name dir -Value PowerLS -Option AllScope
-
-# Set a base path
-$env:Path = "$Env:SystemRoot\system32;$Env:SystemRoot"
-
-# TODO - look for other PS versions?
-$env:Path += ";$Env:SystemRoot\system32\WindowsPowerShell\v1.0"
-
-# TODO - C:\Windows\System32\Wbem  ?
-
-# Add some fun tools to the path, if they're present on this machine...
-add-app-to-path-if-found @("D:\ProgramData") "Chocolatey" "bin"
-add-app-to-path-if-found @("C:\Program Files", "D:\Program Files") "7-Zip"
-add-app-to-path-if-found @("C:\Program Files (x86)", "D:\Program Files") "nodejs"
-add-app-to-path-if-found @("C:\Program Files (x86)") "Git" "cmd"
-
-# Add global npm packages to the path
-add-dir-to-path-if-found @("$Env:USERPROFILE\AppData\Roaming\npm")
-
-# Add current directory to path...
-$env:Path += ";."
 
 # Start out in a good place...
 if (Test-Path f:\git)
