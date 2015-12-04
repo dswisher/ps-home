@@ -35,11 +35,28 @@ function find-and-run ($dirs, $name, $desc)
 }
 
 
-function find-and-add-path ($dirs, $name)
+function add-dir-to-path-if-found ($dirs)
+{
+  foreach ($loc in $dirs) {
+    if (Test-Path $loc)
+    {
+      $env:Path += ";" + $loc
+      break
+    }
+  }
+}
+
+
+function add-app-to-path-if-found ($dirs, $name, $subdir)
 {
   foreach ($loc in $dirs) {
     $path = $loc + "\" + $name
-    if(Test-Path $path)
+    if ($subdir -ne $null)
+    {
+      $path += "\" + $subdir
+    }
+    
+    if (Test-Path $path)
     {
       $env:Path += ";" + $path
       Write-Host "Added" $name "to the path."
@@ -109,13 +126,22 @@ Import-Module $PSScriptRoot\powerls
 Set-Alias -Name ls -Value PowerLS -Option AllScope
 Set-Alias -Name dir -Value PowerLS -Option AllScope
 
-# Add some fun tools to the path...
-find-and-add-path @("C:\Program Files", "D:\Program Files") "7-Zip"
-find-and-add-path @("C:\Program Files (x86)") "nodejs"
+# Set a base path
+$env:Path = "$Env:SystemRoot\system32;$Env:SystemRoot"
+
+# TODO - look for other PS versions?
+$env:Path += ";$Env:SystemRoot\system32\WindowsPowerShell\v1.0"
+
+# TODO - C:\Windows\System32\Wbem  ?
+
+# Add some fun tools to the path, if they're present on this machine...
+add-app-to-path-if-found @("D:\ProgramData") "Chocolatey" "bin"
+add-app-to-path-if-found @("C:\Program Files", "D:\Program Files") "7-Zip"
+add-app-to-path-if-found @("C:\Program Files (x86)", "D:\Program Files") "nodejs"
+add-app-to-path-if-found @("C:\Program Files (x86)") "Git" "cmd"
 
 # Add global npm packages to the path
-# TODO - make this portable and only add if it exists!
-$env:Path += ";C:\Users\swish\AppData\Roaming\npm"
+add-dir-to-path-if-found @("$Env:USERPROFILE\AppData\Roaming\npm")
 
 # Add current directory to path...
 $env:Path += ";."
