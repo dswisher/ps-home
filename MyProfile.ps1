@@ -77,7 +77,7 @@ $env:Path += ";$Env:SystemRoot\system32\WindowsPowerShell\v1.0"
 # Add some fun tools to the path, if they're present on this machine...
 add-app-to-path-if-found @("D:\ProgramData") "Chocolatey" "bin"
 add-app-to-path-if-found @("C:\Program Files", "D:\Program Files") "7-Zip"
-add-app-to-path-if-found @("C:\Program Files (x86)", "D:\Program Files") "nodejs"
+add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)", "D:\Program Files") "nodejs"
 add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)") "Git" "cmd"
 
 # Add global npm packages to the path
