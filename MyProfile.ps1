@@ -75,10 +75,17 @@ $env:Path += ";$Env:SystemRoot\system32\WindowsPowerShell\v1.0"
 # TODO - C:\Windows\System32\Wbem  ?
 
 # Add some fun tools to the path, if they're present on this machine...
-add-app-to-path-if-found @("D:\ProgramData") "Chocolatey" "bin"
+add-app-to-path-if-found @("C:\ProgramData", "D:\ProgramData") "Chocolatey" "bin"
 add-app-to-path-if-found @("C:\Program Files", "D:\Program Files") "7-Zip"
-add-app-to-path-if-found @("C:\Program Files (x86)", "D:\Program Files") "nodejs"
+add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)", "D:\Program Files") "nodejs"
 add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)") "Git" "cmd"
+
+# Anaconda (python, pandas, etc)
+#    http://pandas-docs.github.io/pandas-docs-travis/install.html#installing-pandas-with-anaconda
+#    TODO: clean this up - should really be an app with multiple dirs...
+add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3", "D:\Users\$Env:USERNAME\Anaconda3")
+add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3\Scripts", "D:\Users\$Env:USERNAME\Anaconda3\Scripts")
+add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3\Library\bin", "D:\Users\$Env:USERNAME\Anaconda3\Library\bin")
 
 # Add global npm packages to the path
 add-dir-to-path-if-found @("$Env:USERPROFILE\AppData\Roaming\npm")
