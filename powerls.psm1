@@ -21,7 +21,7 @@
 #>
 function PowerLS {
   param(
-    $redirect = "."
+    [string]$redirect = "."
   )
     write-host "" # add newline at top
 
