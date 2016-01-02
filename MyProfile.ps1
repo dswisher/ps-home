@@ -75,7 +75,7 @@ $env:Path += ";$Env:SystemRoot\system32\WindowsPowerShell\v1.0"
 # TODO - C:\Windows\System32\Wbem  ?
 
 # Local tools
-add-dir-to-path-if-found @("D:\Tools\local")
+add-dir-to-path-if-found @("C:\Tools\local", "D:\Tools\local")
 
 # Add some fun tools to the path, if they're present on this machine...
 add-app-to-path-if-found @("C:\ProgramData", "D:\ProgramData") "Chocolatey" "bin"
