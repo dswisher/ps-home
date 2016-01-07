@@ -84,6 +84,10 @@ add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)", "D:\Pro
 add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)") "Git" "cmd"
 # add-app-to-path-if-found @("C:\git\kurdle\src\", "D:\git\kurdle\src\") "Kurdle" "bin\Debug"
 
+# vNext, aka dnx
+add-app-to-path-if-found @("C:\Program Files\Microsoft DNX\") "Dnvm"
+add-dir-to-path-if-found @("C:\Users\swish\.dnx\runtimes\dnx-coreclr-win-x64.1.0.0-rc1-update1\bin")
+
 # Anaconda (python, pandas, etc)
 #    http://pandas-docs.github.io/pandas-docs-travis/install.html#installing-pandas-with-anaconda
 #    TODO: clean this up - should really be an app with multiple dirs...
