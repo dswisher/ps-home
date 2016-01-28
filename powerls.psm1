@@ -30,7 +30,7 @@ function PowerLS {
     $bufferwidth = $buffer.ui.rawui.buffersize.width
 
     # get all the files and folders
-    $childs = Get-ChildItem $redirect
+    $childs = Get-ChildItem -Force $redirect
 
     # get the longest string and get the length
     $lnStr = $childs | select-object Name | sort-object { "$_".length } -descending | select-object -first 1
@@ -49,11 +49,11 @@ function PowerLS {
       $count += $newName.length
 
       # determine color we should be printing
-      if (Test-Path ($redirect + "\" + $e) -pathtype container) { #folders
-        write-host $newName -nonewline -foregroundcolor green
-      }
-      elseif ($newName -match "^\..*$") { #hidden files
+      if ($newName -match "^\..*$") { #hidden files
         write-host $newName -nonewline -foregroundcolor darkgray
+      }
+      elseif (Test-Path ($redirect + "\" + $e) -pathtype container) { #folders
+        write-host $newName -nonewline -foregroundcolor green
       }
       elseif ($newName -match "\.[^\.]*") { #normal files
         write-host $newName -nonewline -foregroundcolor yellow
