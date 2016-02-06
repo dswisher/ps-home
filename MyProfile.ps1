@@ -151,6 +151,9 @@ function global:prompt {
     return "$Admin "
 }
 
+# Clean up some aliases
+Remove-Item alias:wget
+
 # Make things look purty...
 #$shell = $Host.UI.RawUI
 

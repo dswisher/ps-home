@@ -7,6 +7,7 @@ available updates, do `choco outdated`.
 1. git: `cinst --yes git`, then install SSH keys, in `$HOME\.ssh`
 1. [ConEmu](https://conemu.github.io/): `cinst --yes conemu`, then import settings from the `misc` directory.
 1. [Notepad2](http://www.flos-freeware.ch/notepad2.html): `cinst --yes notepad2`
+1. [wget](https://www.gnu.org/software/wget/), [windows](https://eternallybored.org/misc/wget/): `cinst --yes wget`
 1. [MarkdownPad](http://www.markdownpad.com/) - download from their site. License in dropbox. Not working in Windows 10. FAQ suggests DirectX install; did not help.
 1. [Cygwin](http://cygwin.com/)
 
