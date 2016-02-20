@@ -66,6 +66,26 @@ function add-app-to-path-if-found ($dirs, $name, $subdir)
 }
 
 
+function set-java-home ($dirs)
+{
+  if ($env:JAVA_HOME -ne $null)
+  {
+    Write-Host "Using pre-set JAVA_HOME:" $env:JAVA_HOME
+  }
+  else
+  {
+    foreach ($path in $dirs) {
+      if (Test-Path $path)
+      {
+        $env:JAVA_HOME = $path
+        Write-Host "Set JAVA_HOME:" $path
+        break
+      }
+    }
+  }
+}
+
+
 # Set a base path
 $env:Path = "$Env:SystemRoot\system32;$Env:SystemRoot"
 
@@ -83,10 +103,12 @@ add-app-to-path-if-found @("C:\Program Files", "D:\Program Files") "7-Zip"
 add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)", "D:\Program Files") "nodejs"
 add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)") "Git" "cmd"
 # add-app-to-path-if-found @("C:\git\kurdle\src\", "D:\git\kurdle\src\") "Kurdle" "bin\Debug"
+add-app-to-path-if-found @("D:\Tools\") "apache-maven-3.3.9" "bin"
+add-app-to-path-if-found @("D:\Tools\") "apache-storm-0.10.0" "bin"
 
 # vNext, aka dnx
-add-app-to-path-if-found @("C:\Program Files\Microsoft DNX\") "Dnvm"
-add-dir-to-path-if-found @("C:\Users\swish\.dnx\runtimes\dnx-coreclr-win-x64.1.0.0-rc1-update1\bin")
+#add-app-to-path-if-found @("C:\Program Files\Microsoft DNX\") "Dnvm"
+#add-dir-to-path-if-found @("C:\Users\swish\.dnx\runtimes\dnx-coreclr-win-x64.1.0.0-rc1-update1\bin")
 
 # Anaconda (python, pandas, etc)
 #    http://pandas-docs.github.io/pandas-docs-travis/install.html#installing-pandas-with-anaconda
@@ -101,6 +123,8 @@ add-dir-to-path-if-found @("$Env:USERPROFILE\AppData\Roaming\npm")
 # Add current directory to path...
 $env:Path += ";."
 
+# JAVA_HOME
+set-java-home @("D:\java\jdk1.8.0_25")
 
 # Load Jump-Location profile
 #if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "C:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
