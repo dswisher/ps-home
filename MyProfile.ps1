@@ -68,6 +68,7 @@ function add-app-to-path-if-found ($dirs, $name, $subdir)
 
 function set-java-home ($dirs)
 {
+  # Set JAVA_HOME (or report that one is already set)
   if ($env:JAVA_HOME -ne $null)
   {
     Write-Host "Using pre-set JAVA_HOME:" $env:JAVA_HOME
@@ -78,10 +79,17 @@ function set-java-home ($dirs)
       if (Test-Path $path)
       {
         $env:JAVA_HOME = $path
-        Write-Host "Set JAVA_HOME:" $path
+        Write-Host "Set JAVA_HOME to" $path
         break
       }
     }
+  }
+  
+  # Add JAVA_HOME/bin to the path
+  if ($env:JAVA_HOME -ne $null)
+  {
+    Write-Host "Adding JAVA_HOME\bin to the path."
+    $env:Path += ";" + $env:JAVA_HOME + "\bin"
   }
 }
 
@@ -124,7 +132,7 @@ add-dir-to-path-if-found @("$Env:USERPROFILE\AppData\Roaming\npm")
 $env:Path += ";."
 
 # JAVA_HOME
-set-java-home @("D:\java\jdk1.8.0_25")
+set-java-home @("D:\java\jdk1.8.0_74", "C:\java\jdk1.8.0_74", "D:\java\jdk1.8.0_25")
 
 # Load Jump-Location profile
 #if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "C:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
