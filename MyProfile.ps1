@@ -141,7 +141,7 @@ set-java-home @("D:\java\jdk1.8.0_74", "C:\java\jdk1.8.0_74", "D:\java\jdk1.8.0_
 #}
 
 # Load posh-git
-if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "C:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git") "posh-git.psm1" "Posh-Git")
+if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "C:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "\\Mac\Home\Documents\WindowsPowerShell\Modules\posh-git") "posh-git.psm1" "Posh-Git")
 {
   # Initialize Posh-Git
   $GitPromptSettings.EnableFileStatus = $false
