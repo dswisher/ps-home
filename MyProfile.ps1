@@ -109,6 +109,7 @@ add-dir-to-path-if-found @("C:\Tools\local", "D:\Tools\local")
 add-app-to-path-if-found @("C:\ProgramData", "D:\ProgramData") "Chocolatey" "bin"
 add-app-to-path-if-found @("C:\Program Files", "D:\Program Files") "7-Zip"
 add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)", "D:\Program Files") "nodejs"
+add-app-to-path-if-found @("C:\Program Files") "dotnet" "bin"
 add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)") "Git" "cmd"
 # add-app-to-path-if-found @("C:\git\kurdle\src\", "D:\git\kurdle\src\") "Kurdle" "bin\Debug"
 add-app-to-path-if-found @("D:\Tools\") "apache-maven-3.3.9" "bin"
