@@ -94,7 +94,30 @@ function set-java-home ($dirs)
 }
 
 
-# Set a base path
+function add-from-global-path ($origPath)
+{
+  $origBits = $origPath.Split(";")
+  $newBits = $env:Path.Split(";")
+  
+  $origBits | foreach {
+    if ($newBits -notcontains $_)
+    {
+      if ($_.StartsWith($env:userprofile))
+      {
+        Write-Host "Copied from orig path:" $_
+        $env:Path += ";" + $_
+      }
+      else
+      {
+        # Write-Host "Not adding" $_ "to path"
+      }
+    }
+  }
+}
+
+
+# Set a base path after saving the original path
+$origPath = $env:Path
 $env:Path = "$Env:SystemRoot\system32;$Env:SystemRoot"
 
 # TODO - look for other PS versions?
@@ -128,6 +151,9 @@ add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3\Library\bin", "D:\U
 
 # Add global npm packages to the path
 add-dir-to-path-if-found @("$Env:USERPROFILE\AppData\Roaming\npm")
+
+# Add anything in the original path that we care about
+add-from-global-path $origPath
 
 # Add current directory to path...
 $env:Path += ";."
@@ -185,7 +211,9 @@ function global:prompt {
 }
 
 # Clean up some aliases
+# TODO - wrap this in a function so if the alias is missing, it doesn't error out
 Remove-Item alias:wget
+Remove-Item alias:curl
 
 # Make things look purty...
 #$shell = $Host.UI.RawUI
