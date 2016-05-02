@@ -1,3 +1,6 @@
+function swish-init()
+{
+
 Write-Host "Initializing shell..."
 
 function find-and-run ($dirs, $name, $desc)
@@ -161,12 +164,6 @@ $env:Path += ";."
 # JAVA_HOME
 set-java-home @("D:\java\jdk1.8.0_74", "C:\java\jdk1.8.0_74", "D:\java\jdk1.8.0_25")
 
-# Load Jump-Location profile
-#if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location", "C:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\swish\Documents\WindowsPowerShell\Modules\Jump.Location", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\Jump.Location") "Jump.Location.psd1" "Jump Location")
-#{
-  # No special init for this
-#}
-
 # Load posh-git
 if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "C:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "\\Mac\Home\Documents\WindowsPowerShell\Modules\posh-git") "posh-git.psm1" "Posh-Git")
 {
@@ -210,11 +207,6 @@ function global:prompt {
     return "$Admin "
 }
 
-# Clean up some aliases
-# TODO - wrap this in a function so if the alias is missing, it doesn't error out
-Remove-Item alias:wget
-Remove-Item alias:curl
-
 # Make things look purty...
 #$shell = $Host.UI.RawUI
 
@@ -223,9 +215,6 @@ Remove-Item alias:curl
 
 # Set up a customized version of powerls
 Import-Module $PSScriptRoot\powerls
-
-Set-Alias -Name ls -Value PowerLS -Option AllScope
-Set-Alias -Name dir -Value PowerLS -Option AllScope
 
 # Start out in a good place...
 if (Test-Path f:\git)
@@ -241,5 +230,41 @@ elseif (Test-Path d:\git)
   Set-Location d:\git
 }
 
+# ----------------------------------------------
+# Helpers to assist with stupid Nova limitations
+
+$global:novaFile = "$HOME\nova-creds.txt"
+
+Write-Host $global:novaFile
+
+# Open notepad2 to edit the nova creds file
+function global:nova-edit
+{
+  notepad $global:novaFile
+}
+
+# After editing $HOME/nova-creds.txt, run this to update the environment variables
+function global:nova-update
+{
+  $text = Get-Content $global:novafile
+# TODO TODO TODO - better sanity checks!
+  $env:nova_access_key = $text[2]
+  $env:nova_secret_key = $text[6]
+  $env:nova_token = $text[10]
+  Write-Host "Env variables updated..."
+}
+
 # Done!
 Write-Host "Ready."
+}
+
+swish-init
+
+# Clean up some aliases
+# TODO - wrap this in a function so if the alias is missing, it doesn't error out
+Remove-Item alias:wget
+Remove-Item alias:curl
+
+# Set some aliases
+Set-Alias -Name ls -Value PowerLS -Option AllScope
+Set-Alias -Name dir -Value PowerLS -Option AllScope
