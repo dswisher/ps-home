@@ -235,8 +235,6 @@ elseif (Test-Path d:\git)
 
 $global:novaFile = "$HOME\nova-creds.txt"
 
-Write-Host $global:novaFile
-
 # Open notepad2 to edit the nova creds file
 function global:nova-edit
 {
@@ -246,12 +244,32 @@ function global:nova-edit
 # After editing $HOME/nova-creds.txt, run this to update the environment variables
 function global:nova-update
 {
-  $text = Get-Content $global:novafile
-# TODO TODO TODO - better sanity checks!
-  $env:nova_access_key = $text[2]
-  $env:nova_secret_key = $text[6]
-  $env:nova_token = $text[10]
-  Write-Host "Env variables updated..."
+  $credsDir = "$HOME\.aws"
+  $credsFile = "$credsDir\credentials"
+  
+  Write-Host "...v12..."
+  
+  # Make sure the .aws directory exists
+  if((Test-Path $credsDir) -eq 0)
+  {
+    New-Item -ItemType Directory -Path $credsDir | Out-Null
+    Write-Host "...created $credsDir..."
+  }
+  
+  # Read the Nova creds file
+  $novaText = Get-Content $global:novafile
+  
+  # Build up the AWS creds file text
+  $credText = @("[default]")
+  $credText += "aws_access_key_id=" + $novaText[2]
+  $credText += "aws_secret_access_key=" + $novaText[6]
+  $credText += "aws_session_token=" + $novaText[10]
+  
+  # Write it out
+  $credText | Out-File $credsFile
+
+  # Success!
+  Write-Host "$credsFile updated..."
 }
 
 # Done!
