@@ -6,7 +6,8 @@ Write-Host "Initializing shell..."
 function find-and-run ($dirs, $name, $desc)
 {
   $found = $FALSE
-  foreach ($loc in $dirs) {
+  foreach ($loc in $dirs)
+  {
     $file = $loc + "\" + $name
     if([IO.File]::Exists($file) -eq $true)
     {
@@ -40,7 +41,8 @@ function find-and-run ($dirs, $name, $desc)
 
 function add-dir-to-path-if-found ($dirs)
 {
-  foreach ($loc in $dirs) {
+  foreach ($loc in $dirs)
+  {
     if (Test-Path $loc)
     {
       $env:Path += ";" + $loc
@@ -52,7 +54,8 @@ function add-dir-to-path-if-found ($dirs)
 
 function add-app-to-path-if-found ($dirs, $name, $subdir)
 {
-  foreach ($loc in $dirs) {
+  foreach ($loc in $dirs)
+  {
     $path = $loc + "\" + $name
     if ($subdir -ne $null)
     {
@@ -93,6 +96,21 @@ function set-java-home ($dirs)
   {
     Write-Host "Adding JAVA_HOME\bin to the path."
     $env:Path += ";" + $env:JAVA_HOME + "\bin"
+  }
+}
+
+
+function setup-python ($dirs)
+{
+  foreach ($loc in $dirs)
+  {
+    $path = $loc + "python2"
+    if (Test-Path $path)
+    {
+      Write-Host "Adding python in " $path
+      $env:Path += ";" + $path + ";" + $path + "\Scripts"
+      break
+    }
   }
 }
 
@@ -148,9 +166,12 @@ add-app-to-path-if-found @("D:\Tools\") "apache-storm-0.10.0" "bin"
 # Anaconda (python, pandas, etc)
 #    http://pandas-docs.github.io/pandas-docs-travis/install.html#installing-pandas-with-anaconda
 #    TODO: clean this up - should really be an app with multiple dirs...
-add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3", "D:\Users\$Env:USERNAME\Anaconda3")
-add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3\Scripts", "D:\Users\$Env:USERNAME\Anaconda3\Scripts")
-add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3\Library\bin", "D:\Users\$Env:USERNAME\Anaconda3\Library\bin")
+#add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3", "D:\Users\$Env:USERNAME\Anaconda3")
+#add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3\Scripts", "D:\Users\$Env:USERNAME\Anaconda3\Scripts")
+#add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3\Library\bin", "D:\Users\$Env:USERNAME\Anaconda3\Library\bin")
+
+# Python seems like fun
+setup-python @("C:\Tools\")
 
 # Add global npm packages to the path
 add-dir-to-path-if-found @("$Env:USERPROFILE\AppData\Roaming\npm")
