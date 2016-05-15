@@ -7,7 +7,8 @@ My [PowerShell](https://technet.microsoft.com/en-us/library/bb978526.aspx) profi
 
 1. Clone this repo to c:\git\ps-home or d:\git\ps-home.
 2. Make a backup copy of your profile, if you have one (TODO: install script should do this some day!)
-3. Run `.\Install.ps` 
+3. If you have not done so, tweak the execution policy so that you can run scripts: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned`
+4. Run `.\Install.ps` 
 
 See [more details](pc-setup.md) on my standard pc setup.
 
