@@ -149,12 +149,16 @@ $env:Path += ";$Env:SystemRoot\system32\WindowsPowerShell\v1.0"
 # Local tools
 add-dir-to-path-if-found @("C:\Tools\local", "D:\Tools\local")
 
+# .NET
+# add-dir-to-path-if-found @("C:\Windows\Microsoft.NET\Framework64\v4.0.30319")
+
 # Add some fun tools to the path, if they're present on this machine...
 add-app-to-path-if-found @("C:\ProgramData", "D:\ProgramData") "Chocolatey" "bin"
 add-app-to-path-if-found @("C:\Program Files", "D:\Program Files") "7-Zip"
 add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)", "D:\Program Files") "nodejs"
 add-app-to-path-if-found @("C:\Program Files") "dotnet" "bin"
 add-app-to-path-if-found @("C:\Program Files", "C:\Program Files (x86)") "Git" "cmd"
+add-app-to-path-if-found @("C:\Program Files (x86)") "vim" "vim80"
 # add-app-to-path-if-found @("C:\git\kurdle\src\", "D:\git\kurdle\src\") "Kurdle" "bin\Debug"
 add-app-to-path-if-found @("D:\Tools\") "apache-maven-3.3.9" "bin"
 add-app-to-path-if-found @("D:\Tools\") "apache-storm-0.10.0" "bin"
@@ -184,6 +188,10 @@ $env:Path += ";."
 
 # JAVA_HOME
 set-java-home @("C:\Java\jdk1.8.0_102\", "D:\java\jdk1.8.0_74", "C:\java\jdk1.8.0_74", "D:\java\jdk1.8.0_25")
+
+# ANDROID_HOME
+# TODO - do a search-path thing, like set-java-home!
+$env:ANDROID_HOME = "C:\Users\swish\AppData\Local\Android\Sdk"
 
 # Load posh-git
 if (find-and-run @("C:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "C:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\swish\Documents\WindowsPowerShell\Modules\posh-git", "D:\Users\Doug\Documents\WindowsPowerShell\Modules\posh-git", "\\Mac\Home\Documents\WindowsPowerShell\Modules\posh-git") "posh-git.psm1" "Posh-Git")
@@ -249,48 +257,6 @@ elseif (Test-Path c:\git)
 elseif (Test-Path d:\git)
 {
   Set-Location d:\git
-}
-
-# ----------------------------------------------
-# Helpers to assist with stupid Nova limitations
-
-$global:novaFile = "$HOME\nova-creds.txt"
-
-# Open notepad2 to edit the nova creds file
-function global:nova-edit
-{
-  notepad $global:novaFile
-}
-
-# After editing $HOME/nova-creds.txt, run this to update the environment variables
-function global:nova-update
-{
-  $credsDir = "$HOME\.aws"
-  $credsFile = "$credsDir\credentials"
-  
-  Write-Host "...v12..."
-  
-  # Make sure the .aws directory exists
-  if((Test-Path $credsDir) -eq 0)
-  {
-    New-Item -ItemType Directory -Path $credsDir | Out-Null
-    Write-Host "...created $credsDir..."
-  }
-  
-  # Read the Nova creds file
-  $novaText = Get-Content $global:novafile
-  
-  # Build up the AWS creds file text
-  $credText = @("[default]")
-  $credText += "aws_access_key_id=" + $novaText[2]
-  $credText += "aws_secret_access_key=" + $novaText[6]
-  $credText += "aws_session_token=" + $novaText[10]
-  
-  # Write it out
-  $credText | Out-File $credsFile
-
-  # Success!
-  Write-Host "$credsFile updated..."
 }
 
 # Done!
