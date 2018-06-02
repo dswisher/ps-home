@@ -104,7 +104,7 @@ function setup-python ($dirs)
 {
   foreach ($loc in $dirs)
   {
-    $path = $loc + "python2"
+    $path = $loc + "python27"
     if (Test-Path $path)
     {
       Write-Host "Adding python in " $path
@@ -163,19 +163,8 @@ add-app-to-path-if-found @("C:\Program Files (x86)") "vim" "vim80"
 add-app-to-path-if-found @("D:\Tools\") "apache-maven-3.3.9" "bin"
 add-app-to-path-if-found @("D:\Tools\") "apache-storm-0.10.0" "bin"
 
-# vNext, aka dnx
-#add-app-to-path-if-found @("C:\Program Files\Microsoft DNX\") "Dnvm"
-#add-dir-to-path-if-found @("C:\Users\swish\.dnx\runtimes\dnx-coreclr-win-x64.1.0.0-rc1-update1\bin")
-
-# Anaconda (python, pandas, etc)
-#    http://pandas-docs.github.io/pandas-docs-travis/install.html#installing-pandas-with-anaconda
-#    TODO: clean this up - should really be an app with multiple dirs...
-#add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3", "D:\Users\$Env:USERNAME\Anaconda3")
-#add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3\Scripts", "D:\Users\$Env:USERNAME\Anaconda3\Scripts")
-#add-dir-to-path-if-found @("C:\Users\$Env:USERNAME\Anaconda3\Library\bin", "D:\Users\$Env:USERNAME\Anaconda3\Library\bin")
-
 # Python seems like fun
-setup-python @("C:\Tools\")
+setup-python @("C:\")
 
 # Add global npm packages to the path
 add-dir-to-path-if-found @("$Env:USERPROFILE\AppData\Roaming\npm")
@@ -273,3 +262,4 @@ Remove-Item alias:curl
 # Set some aliases
 Set-Alias -Name ls -Value PowerLS -Option AllScope
 Set-Alias -Name dir -Value PowerLS -Option AllScope
+Set-Alias -Name vi -Value vim

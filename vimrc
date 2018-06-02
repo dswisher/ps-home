@@ -19,6 +19,7 @@ Plugin 'jlanzarotta/bufexplorer'    " better buffer list
 Plugin 'scrooloose/syntastic'
 
 " Experimental
+Plugin 'PProvost/vim-ps1.git'       " powershell support
 " Plugin 'posva/vim-vue'              " vuejs syntax highlighting
 Plugin 'ctrlpvim/ctrlp.vim'         " fuzzy file finder
 " Plugin 'tpope/vim-surround'         " surround
@@ -27,7 +28,7 @@ Plugin 'ctrlpvim/ctrlp.vim'         " fuzzy file finder
 " Plugin 'mileszs/ack.vim'            " search using Ack
 " Plugin 'ludovicchabant/vim-gutentags'       " better tags support?
 Plugin 'ConradIrwin/vim-bracketed-paste'    " automagically set paste when pasting
-Plugin 'maxbrunsfeld/vim-yankstack'         " paste older text
+" Plugin 'maxbrunsfeld/vim-yankstack'         " paste older text
 " Plugin 'davidhalter/jedi-vim'               " Python code completion, via Jedi
 
 " Remapping the tab key seems to mess me up more often than it helps
@@ -145,6 +146,6 @@ nmap <leader>sn :lnext<CR>
 nmap <leader>ss :SyntasticCheck<CR>
 
 " - - - - Yankstack mappings
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
+" nmap <leader>p <Plug>yankstack_substitute_older_paste
+" nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
